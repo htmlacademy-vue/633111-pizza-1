@@ -2,7 +2,7 @@
   <div class="sheet__content diameter">
     <label
       class="diameter__input"
-      v-for="(item, index) in sizes"
+      v-for="(item, index) in sizesAll"
       :key="index"
       :class="setClass(item.id, sizesClass)"
     >
@@ -11,8 +11,8 @@
         name="diameter"
         class="visually-hidden"
         :value="item.multiplier"
-        v-model="multiplier"
-        @change="$emit('multiplier', Number($event.target.value))"
+        :checked="item.id === 1"
+        @change="UPDATE_MULTIPLIER(item.multiplier)"
       />
       <span>{{ item.name }}</span>
     </label>
@@ -20,24 +20,13 @@
 </template>
 
 <script>
+import { mapState, mapGetters, mapMutations } from "vuex";
+import { UPDATE_MULTIPLIER } from "@/store/mutation-types.js";
+
 export default {
   name: "BuilderSizeSelector",
-  data() {
-    return {
-      multiplier: 1,
-    };
-  },
-  props: {
-    sizes: {
-      type: Array,
-      required: true,
-    },
-    sizesClass: {
-      type: Array,
-      required: true,
-    },
-  },
   methods: {
+    ...mapMutations("Builder", [UPDATE_MULTIPLIER]),
     setClass(elemId, arr) {
       this.class = null;
       arr.forEach((el) => {
@@ -48,6 +37,10 @@ export default {
       });
       return this.class;
     },
+  },
+  computed: {
+    ...mapGetters("Builder", ["sizesAll"]),
+    ...mapState("Builder", ["sizesClass"]),
   },
 };
 </script>

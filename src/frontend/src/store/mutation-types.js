@@ -1,0 +1,11 @@
+export const UPDATE_MULTIPLIER = "UPDATE_MULTIPLIER";
+export const UPDATE_COUNT = "UPDATE_COUNT";
+export const ADD_COUNT = "ADD_COUNT";
+export const UPDATE_DOUGH = "UPDATE_DOUGH";
+export const UPDATE_SAUCE = "UPDATE_SAUCE";
+export const INIT = "INIT";
+export const CHANGE_PIZZA_NAME = "CHANGE_PIZZA_NAME";
+export const PIZZA_ADD_CART = "PIZZA_ADD_CART";
+export const UPDATE_PRICE = "UPDATE_PRICE";
+export const GET_STORAGE = "GET_STORAGE";
+export const CLEAR = "CLEAR";

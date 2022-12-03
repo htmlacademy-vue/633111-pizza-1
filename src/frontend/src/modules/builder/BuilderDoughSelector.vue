@@ -2,22 +2,17 @@
   <div class="sheet__content dough">
     <label
       class="dough__input"
-      v-for="(item, index) in dough"
+      v-for="(item, index) in doughAll"
       :key="index"
-      :class="doughClass[index]"
+      :class="item.class"
     >
       <input
         type="radio"
         name="dought"
         class="visually-hidden"
-        :value="item.id"
-        v-model="isChecked"
-        @change="
-          $emit('onUpdateDough', {
-            price: item.price,
-            id: item.id,
-          })
-        "
+        :value="item.price"
+        @change="UPDATE_DOUGH(item)"
+        :checked="item.id === 1"
       />
       <b>
         {{ item.name }}
@@ -27,23 +22,15 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapMutations } from "vuex";
+import { UPDATE_DOUGH } from "@/store/mutation-types.js";
+
 export default {
   name: "BuilderDoughSelector",
-  data() {
-    return {
-      isChecked: 1,
-    };
+  methods: {
+    ...mapMutations("Builder", [UPDATE_DOUGH]),
   },
-  props: {
-    dough: {
-      type: Array,
-      required: true,
-    },
-    doughClass: {
-      type: Array,
-      required: true,
-    },
-  },
+  computed: mapGetters("Builder", ["doughAll"]),
 };
 </script>
 <style></style>

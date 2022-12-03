@@ -2,12 +2,12 @@
   <ul class="ingredients__list">
     <li
       class="ingredients__item"
-      v-for="(item, index) in this.ingredients"
+      v-for="(item, index) in IngredientsAll"
       :key="index"
     >
       <AppDrag
         class="filling"
-        :class="setClass(item.id, fillingClass)"
+        :class="setClass(item.id, getFillingClass)"
         :transfer-data="item"
         :draggable="item.count < 3 ? true : false"
       >
@@ -15,6 +15,7 @@
       </AppDrag>
       <ItemCounter
         :count="item.count"
+        :maxCount="3"
         @update:count="$emit('updateCount', { id: item.id, count: $event })"
       />
     </li>
@@ -22,26 +23,13 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 import ItemCounter from "@/common/components/ItemCounter.vue";
 import AppDrag from "@/common/components/AppDrag.vue";
 
 export default {
   name: "BuilderIngredientsSelector",
-  data() {
-    return {
-      ingredients: this.pizzaIngredients,
-    };
-  },
-  props: {
-    pizzaIngredients: {
-      type: Array,
-      required: true,
-    },
-    fillingClass: {
-      type: Array,
-      required: true,
-    },
-  },
   components: {
     ItemCounter,
     AppDrag,
@@ -58,6 +46,7 @@ export default {
       return this.class;
     },
   },
+  computed: mapGetters("Builder", ["IngredientsAll", "getFillingClass"]),
 };
 </script>
 
